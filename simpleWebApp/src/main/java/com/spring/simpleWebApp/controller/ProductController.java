@@ -13,7 +13,7 @@ public class ProductController {
     @Autowired
     ProductService service;
 
-    @RequestMapping("/products")
+    @RequestMapping("/products") // by default RequestMapping is GET request
     public List<Product> getProducts(){
         return service.getAllProducts();
     }
