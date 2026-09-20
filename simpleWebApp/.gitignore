@@ -31,3 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
+
+.DS_Store
+/../Java-Snake-Game/
+/../MavenProject/
+/../PracticeDS/
+/../Random/
+/../demoApp.zip
+/../demoApp/
+/../simpleWebApp.zip
