@@ -4,9 +4,9 @@ import com.spring.simpleWebApp.model.Product;
 import com.spring.simpleWebApp.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -22,11 +22,18 @@ public class ProductService {
     }
 
     public Product getProductById(int prodId){
-        return repo.findById(prodId).orElse(new Product());
+        return repo.findById(prodId).orElse(null);
     }
 
     public void addProduct(Product prod){
         repo.save(prod);
+    }
+
+    public Product addProduct(Product product, MultipartFile imageFile) throws IOException {
+        product.setImageName(imageFile.getOriginalFilename());
+        product.setImageType(imageFile.getContentType());
+        product.setImageData(imageFile.getBytes());
+        return repo.save(product);
     }
 
     public void updateProductByID(int prodId){
