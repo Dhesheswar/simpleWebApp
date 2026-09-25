@@ -2,9 +2,11 @@ package com.spring.simpleWebApp.controller;
 
 import com.spring.simpleWebApp.model.Product;
 import com.spring.simpleWebApp.service.ProductService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,8 +21,8 @@ public class ProductController {
     ProductService service;
 
     @RequestMapping("/products") // by default RequestMapping is GET request
-    public List<Product> getProducts(){
-        return service.getAllProducts();
+    public ResponseEntity<List<Product>> getProducts(){
+        return new ResponseEntity<>(service.getAllProducts(),HttpStatus.OK);
     }
     @GetMapping("/products/{prodId}")
     public ResponseEntity<Product> getProductById(@PathVariable int prodId){
@@ -36,12 +38,13 @@ public class ProductController {
         service.addProduct(prod);
     }
     @PutMapping("/products/{prodId}")
-    public void updateProductById(@PathVariable int prodId){
-        service.updateProductByID(prodId);
+    public ResponseEntity<?> updateProductById(@PathVariable int prodId,
+                                                @RequestBody Product product){
+        return new ResponseEntity<>(service.updateProductByID(prodId,product),HttpStatus.OK);
     }
     @DeleteMapping("/products/{prodId}")
-    public void deleteProductBId(@PathVariable int prodId){
-        service.deleteProductByID(prodId);
+    public ResponseEntity<?> deleteProductBId(@PathVariable int prodId){
+        return new ResponseEntity<>(service.deleteProductByID(prodId),HttpStatus.OK);
     }
     @PostMapping("/products/image")
     public ResponseEntity<?> addProduct(@RequestPart Product product,
@@ -52,5 +55,17 @@ public class ProductController {
         }catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.NO_CONTENT);
         }
+    }
+    @GetMapping("/products/fetch/{prodId}/image")
+    public ResponseEntity<?> fetchProduct(@PathVariable int prodId){
+         try{
+            Product product1 = service.getProductById(prodId);
+            byte[] imageFile = product1.getImageData();
+            return ResponseEntity.ok()
+                .contentType(MediaType.valueOf(product1.getImageType()))
+                .body(imageFile);
+         }catch(Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.NO_CONTENT);
+         }                                             
     }
 }

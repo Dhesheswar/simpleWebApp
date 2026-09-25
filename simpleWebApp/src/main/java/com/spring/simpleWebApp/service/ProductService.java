@@ -36,15 +36,22 @@ public class ProductService {
         return repo.save(product);
     }
 
-    public void updateProductByID(int prodId){
+    public Product updateProductByID(int prodId,Product product){
         for(Product p : repo.findAll()){
             if(p.getProdId() == prodId){
-                repo.save(p);
+                return repo.save(p);
             }
         }
+        return null;
     }
 
-    public void deleteProductByID(int prodId){
-        repo.deleteById(prodId);
+    public Product deleteProductByID(int prodId){
+        Product product = getProductById(prodId);
+        if(product!=null){
+            repo.deleteById(prodId);
+            return product;
+        }else{
+            return null; 
+        } 
     }
 }
