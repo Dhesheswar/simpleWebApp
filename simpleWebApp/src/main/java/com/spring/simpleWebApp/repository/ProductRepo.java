@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface ProductRepo extends JpaRepository<Product, Integer> {
 
     @Query("SELECT p FROM Product p WHERE p.name LIKE %:keyword%")
-    public Product searchByQuery(String keyword);
+    public Product searchByQuery(@RequestParam String keyword);
 }
 //changes done
