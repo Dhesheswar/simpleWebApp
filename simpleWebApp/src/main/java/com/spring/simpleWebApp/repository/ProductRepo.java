@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Repository
 public interface ProductRepo extends JpaRepository<Product, Integer> {
 
-    @Query("SELECT p FROM Product p WHERE p.name LIKE %:keyword%")
-    public Product searchByQuery(@RequestParam String keyword);
+    @Query("SELECT p FROM Product p WHERE LOWER(p.prodName) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    public Product searchByQuery(@RequestParam("keyword") String keyword);
 }
 //changes done

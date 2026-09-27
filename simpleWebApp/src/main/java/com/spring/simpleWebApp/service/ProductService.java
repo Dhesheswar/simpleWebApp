@@ -2,7 +2,9 @@ package com.spring.simpleWebApp.service;
 
 import com.spring.simpleWebApp.model.Product;
 import com.spring.simpleWebApp.repository.ProductRepo;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -57,5 +59,9 @@ public class ProductService {
 
     public Product searchProduct(String keyword){
         return repo.searchByQuery(keyword);
+    }
+
+    public CsrfToken getCsrfToken(HttpServletRequest request) {
+        return (CsrfToken) request.getAttribute("_csrf");
     }
 }

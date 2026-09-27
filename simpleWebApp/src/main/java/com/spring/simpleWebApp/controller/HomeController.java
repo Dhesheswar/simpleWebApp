@@ -1,5 +1,6 @@
 package com.spring.simpleWebApp.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -7,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 
     @RequestMapping("/")
-    public String greet(){
-        return "Welcome to my new Webpage";
+    public String greet(HttpServletRequest request){
+        return "Welcome to my new Webpage : "+ request.getSession().getId();
     }
 
     @RequestMapping("/about")

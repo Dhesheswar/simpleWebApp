@@ -3,11 +3,13 @@ package com.spring.simpleWebApp.controller;
 import com.spring.simpleWebApp.model.Product;
 import com.spring.simpleWebApp.service.ProductService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +22,10 @@ public class ProductController {
     @Autowired
     ProductService service;
 
+    @GetMapping("/csrf-token")
+    public CsrfToken getCsrfToken(HttpServletRequest request){
+        return service.getCsrfToken(request);
+    }
     @RequestMapping("/products") // by default RequestMapping is GET request
     public ResponseEntity<List<Product>> getProducts(){
         return new ResponseEntity<>(service.getAllProducts(),HttpStatus.OK);
