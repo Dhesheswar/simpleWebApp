@@ -33,12 +33,12 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
 
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/logout").permitAll()
+                        .requestMatchers("/logout","/login","createUser").permitAll()
                         .anyRequest().authenticated()
                 )
 
-                //.formLogin(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults())
+                .formLogin(Customizer.withDefaults())
+                //.httpBasic(Customizer.withDefaults())
 
                 .logout(logout -> logout
                         .logoutUrl("/logout")
