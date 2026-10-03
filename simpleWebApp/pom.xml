@@ -42,6 +42,12 @@
         <scope>runtime</scope>
     </dependency>
 
+    <!-- postGres Sql Database -->
+    <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+    </dependency>
+
     <!-- DevTools -->
     <dependency>
         <groupId>org.springframework.boot</groupId>
